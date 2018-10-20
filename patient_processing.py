@@ -1,4 +1,5 @@
 import random
+import qrtools
 
 database_directory = "database.csv"
 
@@ -43,9 +44,13 @@ def NewPatientData(first, last, bloodtype, allergies):
         return str(r) + " successfully created"
 
 
-def GetPatientData(id):
+def GetPatientData(qrcode):
+    qr = qrtools.QR()
+    qr.decode(qrcode)
+    id = int(qr.data)
+
     with open(database_directory, 'r') as file:
         data = file.readlines()
         for line in data:
-            if int(line.split(',')[0]) == int(id):
+            if int(line.split(',')[0]) == id:
                 return line
