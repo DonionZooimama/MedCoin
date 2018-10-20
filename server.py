@@ -14,7 +14,7 @@ class UpdatePatient(Resource):
         allergies = request.args.get('allergies')
         ID = request.args.get('ID')
 
-        return UpdatePatientData(ID, first, last, blood_type, allergies)
+        return UpdatePatientData(ID, first, last, bloodtype, allergies)
 
 
 class NewPatient(Resource):
@@ -28,14 +28,21 @@ class NewPatient(Resource):
 
 class PatientInfo(Resource):
     def get(self):
-        id = request.args.get('id')
-        GetPatient(id)
-        return GetPatient(id)
+        qrcode = request.args.get('qrcode')
+        GetPatientData(qrcode)
+        return GetPatientData(qrcode)
+
+
+class Hello(Resource):
+    def get(self):
+        return "Hello"
 
 
 api.add_resource(UpdatePatient, '/update')
 api.add_resource(NewPatient, '/new')
 api.add_resource(PatientInfo, '/info')
+api.add_resource(Hello, '/')
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
