@@ -1,18 +1,19 @@
 import random
 import qrtools
+import base64
 
 database_directory = "database.csv"
 
 
-def UpdatePatientData(id, first, last, bloodtype, allergies):
+def UpdatePatientData(myid, name, age, bloodtype,medications, allergies):
     with open(database_directory, 'r') as file:
         data = file.readlines()
         index = 0
         found = False
         for line in data:
-            if int(line.split(',')[0]) == int(id):
+            if int(line.split(',')[0]) == int(myid):
                 found = True
-                new_line = "%s,%s,%s,%s,%s,\n" % (id, first, last, bloodtype, allergies)
+                new_line = "%s,%s,%s,%s,%s,%s,\n" % (myid, name, age, bloodtype, medications, allergies)
                 data[index] = new_line
                 break
             index += 1
@@ -20,9 +21,9 @@ def UpdatePatientData(id, first, last, bloodtype, allergies):
     if found:
         with open(database_directory, 'w') as file:
             file.writelines(data)
-            return id + " successfully updated"
+            return 1
     else:
-        return id + " does not exist"
+        return myid + " does not exist"
 
 
 def NewPatientData(first, last, bloodtype, allergies):
@@ -43,14 +44,17 @@ def NewPatientData(first, last, bloodtype, allergies):
         file.write(line)
         return str(r) + " successfully created"
 
-
-def GetPatientData(qrcode):
+def GetPatientData():
     qr = qrtools.QR()
-    qr.decode(qrcode)
-    id = int(qr.data)
+    qr.decode('temp.jpg')
 
-    with open(database_directory, 'r') as file:
-        data = file.readlines()
-        for line in data:
-            if int(line.split(',')[0]) == id:
-                return line
+    if qr.data != 'NULL':
+        my_id = int(qr.data)
+        with open(database_directory, 'r') as file:
+            data = file.readlines()
+            for line in data:
+                if int(line.split(',')[0]) == my_id:
+                    return line
+        return 0
+    else:
+        return -1

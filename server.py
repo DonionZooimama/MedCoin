@@ -1,20 +1,23 @@
 from flask import Flask, request
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 from patient_processing import *
+import werkzeug
 
 app = Flask(__name__)
 api = Api(app)
 
 
 class UpdatePatient(Resource):
-    def post(self):
-        first = request.args.get('first_name')
-        last = request.args.get('last_name')
+    def get(self):
+        print (request.args)
+        name = request.args.get('name')
+        age = request.args.get('age')
         bloodtype = request.args.get('blood_type')
+        medications = request.args.get('medications')
         allergies = request.args.get('allergies')
         ID = request.args.get('ID')
 
-        return UpdatePatientData(ID, first, last, bloodtype, allergies)
+        return UpdatePatientData(str(ID), str(name), str(age), str(bloodtype), str(medications), str(allergies))
 
 
 class NewPatient(Resource):
@@ -27,11 +30,16 @@ class NewPatient(Resource):
 
 
 class PatientInfo(Resource):
-    def get(self):
-        qrcode = request.args.get('qrcode')
-        GetPatientData(qrcode)
-        return GetPatientData(qrcode)
-
+    def post(self):
+        parse = reqparse.RequestParser()
+        parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
+        args = parse.parse_args()
+        my_file = args['file']
+        my_file.save("temp.jpg")
+        rv = GetPatientData()
+        print rv
+        return rv
+        
 
 class Hello(Resource):
     def get(self):
