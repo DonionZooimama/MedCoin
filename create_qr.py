@@ -22,6 +22,6 @@ with open(database_directory, 'a') as file:
     print str(r) + " successfully created"
 
 qr = pyqrcode.create(str(r))
-qr.png(str(r) + ".png", scale=6)
+qr.png("qrcodes/" + str(r) + ".png", scale=6)
 
 print str(r) + ".png successfully created"
