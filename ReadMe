@@ -10,11 +10,11 @@ How to install:
 How to run the server: python server.py
 
 How to create a new qr code: python create_qr.py
+
 -this will create an empty profile in the database and the qr code will be saved to /qrcodes
 
 
 How to recreate a already created qr code: python create_qr.py profile_id
 
 i.e. python create_qr.py 132424122223
-
 -this will create qr code but wont create the profile again and will be saved to /qrcodes
