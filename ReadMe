@@ -1,0 +1,4 @@
+How to run the server: python server.py
+
+How to create a new qr code: python create_qr.py
+-note this will create an empty profile in the database and the qr code will be saved to /qrcodes
