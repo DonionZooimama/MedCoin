@@ -2,10 +2,8 @@ How to install:
 
 1. goto directory
 2. run: sudo apt-get install libzbar-dev
-3. run: sudo apt-get pip
+3. run: sudo apt-get install pip
 4. run: pip install -r requirements.txt
-
-
 
 How to run the server: python server.py
 
